@@ -1,14 +1,12 @@
 from django.db import models
 from django_currentuser.db.models import CurrentUserField
-from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.fields import (
     GenericForeignKey
 )
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 
 from .mixins import UniversalStateMixin
-
-User = get_user_model()
 
 
 class TimeStampedModel(models.Model):
@@ -112,7 +110,7 @@ class OperationType(models.TextChoices):
 
 class OperationLog(models.Model):
     user = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         null=True,
         blank=True,
         on_delete=models.SET_NULL
